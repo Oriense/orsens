@@ -17,14 +17,19 @@ void onMouse(int event, int x, int y, int flags, void* userdata)
         else
         {
             float ang = orsens.directionToImagePoint(x,y);
-            printf("%d %d: z=%4.2f x=%4.2f y=%4.2f, ang=%4.2f\n", x, y, world_point.x, world_point.y, world_point.z, ang);
+            printf("%d %d: z=%4.2f, x=%4.2f y=%4.2f, ang=%4.2f\n", x, y, world_point.z, world_point.z, world_point.y, ang);
         }
     }
 }
 
 int main()
 {
-    orsens.start(60);
+    if (!orsens.start(60))
+    {
+        printf("unable to start\n");
+        return -1;
+    }
+
 
     namedWindow("color");
     setMouseCallback("color", onMouse, NULL);
@@ -37,12 +42,14 @@ int main()
         orsens.grabSensorData(); //camera images and pose
         std::vector<Human> humans = orsens.getHumans(); //people in the scene
 
+        printf("%d humans detected\n", humans.size());
+
         // some visualization
-        Mat color = orsens.getLeft();
+      Mat color = orsens.getLeft();
 
         for( size_t i = 0; i < humans.size(); i++ )
         {
-            printf("human %d: %4.2f\n", i, humans[i].dist/1000.0, humans[i].angle);
+            printf("human %d: %4.2f %4.2f\n", i, humans[i].dist/1000.0, humans[i].angle);
 
             uint8_t disparity = orsens.dist2disp(humans[i].dist);
             Scalar dist_color = Scalar::all(disparity);
@@ -55,9 +62,10 @@ int main()
         }
 
         imshow("color", color);
-        imshow("depth", orsens.getDispColored());
+        imshow("depth", orsens.getDisp());
 
-        int c = waitKey(1000/30);
+        ///TODO get rate from lib
+        char c = waitKey(1000/15);
 
         if (c==27)
             break;

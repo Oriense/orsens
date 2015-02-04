@@ -4,9 +4,9 @@
 #define NOMINMAX
 
 #include <stdint.h>
+#include <stdio.h>
 
 #include "orcv.h"
-#include "EtronDI_O.h"
 
 const int DISPARITY_COUNT = 256;
 const int NO_DISTANCE = 0;
@@ -42,10 +42,10 @@ private:
     int	image_buf_size_;
 
     //buffers for data from sensor
-    uint8_t	*image_buf;
+ /*   uint8_t	*image_buf;
     uint8_t	*color_buf;
     uint8_t	*depth_buf;
-
+*/
     //images
     Mat left_, right_;
     Mat left_gray_, right_gray_;
@@ -56,7 +56,7 @@ private:
 
     //camera info
     uint16_t zdtable_[DISPARITY_COUNT];
-    TABLEINFO tableinfo_;
+
     uint16_t min_distance_;
     uint16_t max_distance_;
     uint16_t cx_;
@@ -68,8 +68,8 @@ private:
     std::vector<Human> humans_;
 
     //capturing
-    bool allocImageBuffers(int cx1, int cy1, int cx2, int cy2);
-    void freeImageBuffers();
+ //   bool allocImageBuffers(int cx1, int cy1, int cx2, int cy2);
+  //  void freeImageBuffers();
 
     //processing
     bool makeGray();
@@ -84,6 +84,7 @@ public:
 
     //getting data
     Mat getLeft();
+    Mat getDisp();
     Mat getDispColored();
 
     //measuring. distances are in millimetres, except functions ends with M (metres). directions in angles
