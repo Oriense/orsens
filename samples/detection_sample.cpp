@@ -2,7 +2,8 @@
 
 #include "orsens.h"
 
-//using namespace std;
+const String color_window_name = "color";
+const String depth_window_name = "depth";
 
 Orsens orsens;
 
@@ -11,13 +12,14 @@ void onMouse(int event, int x, int y, int flags, void* userdata)
     if  ( event == EVENT_LBUTTONDOWN )
     {
         Point3f world_point = orsens.worldPointAtImagePointM(x,y);
+		uint8_t disparity = orsens.disparityAtImagePoint(x,y);
 
         if (world_point.z==0)
-            printf("empty point\n");
+           printf("empty point\n");
         else
         {
             float ang = orsens.directionToImagePoint(x,y);
-            printf("%d %d: z=%4.2f, x=%4.2f y=%4.2f, ang=%4.2f\n", x, y, world_point.z, world_point.z, world_point.y, ang);
+            printf("%d %d: d=%d, z=%4.2f, x=%4.2f y=%4.2f, ang=%4.2f\n", x, y, disparity, world_point.z, world_point.x, world_point.y, ang);
         }
     }
 }
@@ -31,18 +33,16 @@ int main()
     }
 
 
-    namedWindow("color");
-    setMouseCallback("color", onMouse, NULL);
-    namedWindow("depth");
-    setMouseCallback("depth", onMouse, NULL);
+    namedWindow(depth_window_name);
+    setMouseCallback(color_window_name, onMouse, NULL);
+    namedWindow(depth_window_name);
+    setMouseCallback(depth_window_name, onMouse, NULL);
 
     while (true)
     {
         // just get the data we need
         orsens.grabSensorData(); //camera images and pose
         std::vector<Human> humans = orsens.getHumans(); //people in the scene
-
-        printf("%d humans detected\n", humans.size());
 
         // some visualization
       Mat color = orsens.getLeft();
@@ -61,8 +61,8 @@ int main()
             putText(color, s, Point(humans[i].bounding_rect.x+5, humans[i].centre.y), FONT_HERSHEY_TRIPLEX, 1.0, dist_color);
         }
 
-        imshow("color", color);
-        imshow("depth", orsens.getDisp());
+        imshow(color_window_name, color);
+        imshow(depth_window_name, orsens.getDispColored());
 
         ///TODO get rate from lib
         char c = waitKey(1000/15);
