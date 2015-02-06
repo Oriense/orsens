@@ -22,25 +22,10 @@ include_directories(include
 ## Declare a cpp executable
 add_executable(orsens_sample_detection samples/detection_sample.cpp)
 target_link_libraries(orsens_sample_detection
-  orsens_lib
+  orsens
   ${avutil_LIBRARIES}  
   ${avcodec_LIBRARIES}
   ${swscale_LIBRARIES}
   ${OpenCV_LIBS} 
 )
 
-#############
-## Install ##
-#############
-
-## Mark executables and/or libraries for installation
-#install(TARGETS orsens_lib orsens_sample_detection
-#  RUNTIME DESTINATION bin
-#  LIBRARY DESTINATION lib
-#  ARCHIVE DESTINATION lib
-#)
-
-#install(DIRECTORY include/${PROJECT_NAME}/
- #  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-  # FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"
-#)
