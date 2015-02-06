@@ -1,0 +1,12 @@
+<launch>
+  <node pkg="orsens" type="orsens_node" name="orsens_node"  output="screen" respawn="true">
+  </node> 
+  <node pkg="image_view" type="image_view" name="color">
+    <remap from="image" to="orsens/left" />
+    <param name="autosize" value="true" />
+  </node> 
+  <node pkg="image_view" type="image_view" name="depth">
+    <remap from="image" to="orsens/disparity" />
+    <param name="autosize" value="true" />
+  </node> 
+</launch>
