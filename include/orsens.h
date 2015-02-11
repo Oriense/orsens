@@ -8,11 +8,6 @@
 
 #include "orcv.h"
 
-const int DISPARITY_COUNT = 256;
-const int NO_DISTANCE = 0;
-const int TOO_CLOSE_DISTANCE = 10000;
-const int NO_ANGLE = 361;
-
 //general structure for all objects
 struct SceneObject
 {
@@ -34,18 +29,18 @@ class Orsens
 
 private:
 
+    static const int DISPARITY_COUNT = 256;
+    static const int NO_DISTANCE = 0;
+    static const int TOO_CLOSE_DISTANCE = 10000;
+    static const int NO_ANGLE = 361;
+
+    string data_path_;
+
     int	color_width_;
     int	color_height_;
     int	depth_width_;
     int	depth_height_;
 
-    int	image_buf_size_;
-
-    //buffers for data from sensor
- /*   uint8_t	*image_buf;
-    uint8_t	*color_buf;
-    uint8_t	*depth_buf;
-*/
     //images
     Mat left_, right_;
     Mat left_gray_, right_gray_;
@@ -68,17 +63,24 @@ private:
     std::vector<Human> humans_;
 
     //capturing
- //   bool allocImageBuffers(int cx1, int cy1, int cx2, int cy2);
-  //  void freeImageBuffers();
+//   bool allocImageBuffers(int cx1, int cy1, int cx2, int cy2);
+    //  void freeImageBuffers();
 
     //processing
     bool makeGray();
 
 public:
-    Orsens(){};
-    ~Orsens(){};
+    Orsens() {};
+    ~Orsens() {};
 
-    bool start(uint16_t baseline);
+ typedef enum
+    {
+        CAPTURE_DEPTH_ONLY=0, CAPTURE_LEFT_ONLY, CAPTURE_DEPTH_LEFT, CAPTURE_LEFT_RIGHT,
+    } CaptureMode;
+
+    static CaptureMode captureModeFromString(const std::string& str);
+
+    bool start(CaptureMode capture_mode=CAPTURE_DEPTH_ONLY, string data_path="../data", uint16_t color_width=640, uint16_t depth_width=640, bool compress_color=false, bool compress_depth=false, uint16_t baseline=60);
     bool stop();
     bool grabSensorData();
 
@@ -99,7 +101,7 @@ public:
     //detection
     std::vector<Human> getHumans();
 
-      //misc
+    //misc
     Scalar dist2rgb(uint16_t dist);
     uint8_t dist2disp(uint16_t dist);
 

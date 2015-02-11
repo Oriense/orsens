@@ -1,4 +1,5 @@
 #include <ros/ros.h>
+#include <ros/package.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
@@ -50,9 +51,9 @@ bool working = false;
 
 void sigint_handler(int sig)
 {
-   working = false;
-   orsens.stop();
-   ros::shutdown();
+    working = false;
+    orsens.stop();
+    ros::shutdown();
 }
 
 
@@ -62,7 +63,23 @@ int main (int argc, char** argv)
     ros::init (argc, argv, "orsens_node");
     ros::NodeHandle nh;
 
-    if (!orsens.start(60))
+    string capture_mode_string;
+    string data_path;
+    int color_width, depth_width;
+    bool compress_color, compress_depth;
+
+    nh.param<string>("/orsens/capture_mode", capture_mode_string, "depth_only");
+    nh.param<string>("/orsens/data_path", data_path, "../data");
+    nh.param<int>("/orsens/color_width", color_width, 640);
+    nh.param<int>("/orsens/depth_width", depth_width, 640);
+    nh.param<bool>("/orsens/compress_color", compress_color, false);
+    nh.param<bool>("/orsens/compress_depth", compress_depth, false);
+
+    Orsens::CaptureMode capture_mode = Orsens::captureModeFromString(capture_mode_string);
+
+    printf("params: %d %s\n", color_width, capture_mode_string.c_str());
+
+    if (!orsens.start(capture_mode, data_path, color_width, depth_width, compress_color, compress_depth))
     {
         ROS_ERROR("unable to start OrSens device, check connection\n");
         return -1;
@@ -70,6 +87,7 @@ int main (int argc, char** argv)
 
     // Create a ROS publishers for the output messages
     pub_left = nh.advertise<sensor_msgs::Image> ("/orsens/left", 1);
+    pub_right = nh.advertise<sensor_msgs::Image> ("/orsens/right", 1);
     pub_disp = nh.advertise<sensor_msgs::Image> ("/orsens/disparity", 1); // 0-255
     pub_depth = nh.advertise<sensor_msgs::Image> ("/orsens/depth", 1); // uint16 in mm
 //    pub_info = nh.advertise<sensor_msgs::CameraInfo>("/orsens/camera_info", 1);
@@ -84,9 +102,9 @@ int main (int argc, char** argv)
     {
         ros::Time time = ros::Time::now();
 
-         orsens.grabSensorData(); //camera images and pose
-         Mat color = orsens.getLeft();
-         Mat disp = orsens.getDisp();
+        orsens.grabSensorData(); //camera images and pose
+        Mat color = orsens.getLeft();
+        Mat disp = orsens.getDisp();
 
         if (!color.empty())
         {
@@ -95,10 +113,10 @@ int main (int argc, char** argv)
             ros_left.header.stamp = time;
             ros_left.header.frame_id = "orsens_camera";
             //l_info_msg.header.stamp = time;
-          //  l_info_msg.header.frame_id = "stereo_camera";
+            //  l_info_msg.header.frame_id = "stereo_camera";
 
             pub_left.publish(ros_left);
-          //  pub_info.publish(l_info_msg);
+            //  pub_info.publish(l_info_msg);
         }
         if (!disp.empty())
         {
