@@ -26,12 +26,11 @@ void onMouse(int event, int x, int y, int flags, void* userdata)
 
 int main()
 {
-    if (!orsens.start(60))
+    if (!orsens.start(Orsens::CAPTURE_DEPTH_LEFT))
     {
         printf("unable to start\n");
         return -1;
     }
-
 
     namedWindow(depth_window_name);
     setMouseCallback(color_window_name, onMouse, NULL);
