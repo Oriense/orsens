@@ -4,6 +4,8 @@ project(orsens)
 ## pkg-config libraries
 find_package(OpenCV REQUIRED)
 find_package(PkgConfig REQUIRED)
+find_package(OpenGL REQUIRED)
+find_package(GLUT REQUIRED)
 pkg_check_modules(avutil libavutil REQUIRED)
 pkg_check_modules(avcodec libavcodec REQUIRED)
 pkg_check_modules(swscale libswscale REQUIRED)
@@ -27,5 +29,16 @@ target_link_libraries(orsens_sample_detection
   ${avcodec_LIBRARIES}
   ${swscale_LIBRARIES}
   ${OpenCV_LIBS} 
+)
+
+add_executable(orsens_sample_viewer samples/viewer_sample.cpp)
+target_link_libraries(orsens_sample_viewer
+  orsens
+  ${avutil_LIBRARIES}  
+  ${avcodec_LIBRARIES}
+  ${swscale_LIBRARIES}
+  ${OpenCV_LIBS} 
+  ${OPENGL_LIBRARIES}
+  ${GLUT_LIBRARY}
 )
 

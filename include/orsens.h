@@ -36,18 +36,20 @@ private:
 
     string data_path_;
 
-    int	color_width_;
-    int	color_height_;
-    int	depth_width_;
-    int	depth_height_;
+    uint16_t color_width_;
+    uint16_t color_height_;
+    uint8_t color_rate_;
+    uint16_t depth_width_;
+    uint16_t depth_height_;
+    uint8_t depth_rate_;
 
     //images
     Mat left_, right_;
     Mat left_gray_, right_gray_;
-    Mat disp_, disp_raw_, disp_raw_prev_, depth_;
+    Mat disp_, disp_raw_, disp_raw_prev_, depth_, depth8_;
 
     //what we've got processed
-    bool got_gray_;
+    bool got_gray_, got_depth_;
 
     //camera info
     uint16_t zdtable_[DISPARITY_COUNT];
@@ -68,6 +70,7 @@ private:
 
     //processing
     bool makeGray();
+    bool makeDepth();
 
 public:
     Orsens() {};
@@ -80,7 +83,7 @@ public:
 
     static CaptureMode captureModeFromString(const std::string& str);
 
-    bool start(CaptureMode capture_mode=CAPTURE_DEPTH_ONLY, string data_path="../data", uint16_t color_width=640, uint16_t depth_width=640, bool compress_color=false, bool compress_depth=false, uint16_t baseline=60);
+    bool start(CaptureMode capture_mode=CAPTURE_DEPTH_ONLY, string data_path="../data", uint16_t color_width=640, uint16_t depth_width=640, uint8_t color_rate=15, uint8_t depth_rate=15, bool compress_color=false, bool compress_depth=false, uint16_t baseline=60);
     bool stop();
     bool grabSensorData();
 
@@ -88,6 +91,10 @@ public:
     Mat getLeft();
     Mat getDisp();
     Mat getDispColored();
+    Mat getDepth();
+    Mat getDepth8(); //scaled to fit 8 bit
+
+    uint8_t getRate();
 
     //measuring. distances are in millimetres, except functions ends with M (metres). directions in angles
     uint8_t disparityAtImagePoint(uint16_t x, uint16_t y);
