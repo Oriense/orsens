@@ -35,7 +35,7 @@ void onMouse(int event, int x, int y, int flags, void* userdata)
     }
 }
 
-void on_opengl(void* param)
+/*void on_opengl(void* param)
 {
     glLoadIdentity();
 
@@ -70,7 +70,7 @@ void on_opengl(void* param)
 
    // glutSwapBuffers();
 }
-
+*/
 int main( int argc, char **argv )
 {
     if (!orsens.start(Orsens::CAPTURE_DEPTH_LEFT))
@@ -86,9 +86,9 @@ int main( int argc, char **argv )
     namedWindow(color_window_name);
     setMouseCallback(color_window_name, onMouse, NULL);
 
-    namedWindow(cloud_window_name,CV_WINDOW_OPENGL|CV_WINDOW_NORMAL);
+   /* namedWindow(cloud_window_name,CV_WINDOW_OPENGL|CV_WINDOW_NORMAL);
     resizeWindow(cloud_window_name, 1280, 480);
-    setOpenGlDrawCallback(cloud_window_name,on_opengl,0);
+    setOpenGlDrawCallback(cloud_window_name,on_opengl,0);*/
 
     while (true)
     {
@@ -101,7 +101,7 @@ int main( int argc, char **argv )
         imshow(disp_window_name, orsens.getDispColored());
         imshow(depth_window_name, orsens.getDepth8());
 
-          updateWindow(cloud_window_name);
+       //   updateWindow(cloud_window_name);
 
         char c = (char)waitKey(1000/orsens.getRate());
 
