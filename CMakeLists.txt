@@ -31,6 +31,15 @@ target_link_libraries(orsens_sample_detection
   ${OpenCV_LIBS} 
 )
 
+add_executable(orsens_sample_segmentation samples/segmentation_sample.cpp)
+target_link_libraries(orsens_sample_segmentation
+  orsens
+  ${avutil_LIBRARIES}  
+  ${avcodec_LIBRARIES}
+  ${swscale_LIBRARIES}
+  ${OpenCV_LIBS} 
+)
+
 add_executable(orsens_sample_viewer samples/viewer_sample.cpp)
 target_link_libraries(orsens_sample_viewer
   orsens

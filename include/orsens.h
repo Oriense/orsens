@@ -47,6 +47,7 @@ private:
     Mat left_, right_;
     Mat left_gray_, right_gray_;
     Mat disp_, disp_raw_, disp_raw_prev_, depth_, depth8_;
+    Mat segmentation_mask_;
 
     //what we've got processed
     bool got_gray_, got_depth_;
@@ -64,13 +65,10 @@ private:
     //scene info
     std::vector<Human> humans_;
 
-    //capturing
-//   bool allocImageBuffers(int cx1, int cy1, int cx2, int cy2);
-    //  void freeImageBuffers();
-
     //processing
     bool makeGray();
     bool makeDepth();
+    bool segmentFloor(Mat disp);
 
 public:
     Orsens() {};
@@ -93,6 +91,7 @@ public:
     Mat getDispColored();
     Mat getDepth();
     Mat getDepth8(); //scaled to fit 8 bit
+    Mat getSegmentationMask();
 
     uint8_t getRate();
 
