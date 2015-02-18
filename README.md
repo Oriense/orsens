@@ -5,10 +5,10 @@ Currenlty implemented:
 - Depthmap filtering
 - Measuring 
 - Detection: faces
+- Scene segmentation: floor
 
 Coming soon
 - Integration with SLAM implementations
-- Scene segmentation
 - Obstacle detection and avoidance
 - Tracking
 - and much more
