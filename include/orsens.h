@@ -29,12 +29,9 @@ class Orsens
 
 private:
 
-    static const int DISPARITY_COUNT = 256;
-    static const int NO_DISTANCE = 0;
-    static const int TOO_CLOSE_DISTANCE = 10000;
-    static const int NO_ANGLE = 361;
 
-    string data_path_;
+
+     string data_path_;
 
     uint16_t color_width_;
     uint16_t color_height_;
@@ -53,6 +50,7 @@ private:
     bool got_gray_, got_depth_;
 
     //camera info
+    static const int DISPARITY_COUNT = 256;
     uint16_t zdtable_[DISPARITY_COUNT];
 
     uint16_t min_distance_;
@@ -70,14 +68,28 @@ private:
     bool makeDepth();
     bool segmentFloor(Mat disp);
 
+    //obstacles
+   // int getNearestDistance(Mat depth, Rect roi);     // finds minimum distance in a zone
+   // Point3f getNearestPoint(Mat depth, Mat disp, Rect roi, Point3i& ipt);
+
+    // finds minimum distance in the zone
+    uint16_t nearestDistanceInDepth(Mat depth, Rect roi);
+
 public:
     Orsens() {};
     ~Orsens() {};
 
- typedef enum
+
+    static const int NO_DISTANCE = 0;
+    static const int MAX_DISTANCE = 10000;
+    static const int NO_ANGLE = 361;
+
+      typedef enum
     {
         CAPTURE_DEPTH_ONLY=0, CAPTURE_LEFT_ONLY, CAPTURE_DEPTH_LEFT, CAPTURE_LEFT_RIGHT,
     } CaptureMode;
+
+    CaptureMode capture_mode_;
 
     static CaptureMode captureModeFromString(const std::string& str);
 
@@ -87,6 +99,7 @@ public:
 
     //getting data
     Mat getLeft();
+    Mat getRight();
     Mat getDisp();
     Mat getDispColored();
     Mat getDepth();
@@ -103,6 +116,11 @@ public:
     Point3f worldPointAtImagePointM(uint16_t x, uint16_t y);
     float directionToImagePoint(uint16_t x, uint16_t y);
     float directionToImageRect(Rect rect);
+
+    uint16_t getMinDistance(); //minimun possible distance camera able to measure
+    uint16_t getMaxDistance(); //maximum possible distance
+
+    uint16_t getNearestDistance(Rect roi);
 
     //detection
     std::vector<Human> getHumans();

@@ -50,25 +50,25 @@ void on_opengl(void* param)
     glPointSize(1);
     glBegin(GL_POINTS);
 
-    for (int y=0; y<depth.rows; y++)
-        for (int x=0; x<depth.cols; x++)
-        {
-          //  glColor3f( 1.0f, 1.0f, 1.0f );
-         //   printf("d=%d ", depth.at<uint16_t>(y,x));
-         float k=depth.cols;
-         // float k=1.0;
-           //
-            glColor3f(color.at<Vec3b>(y,x)[2]/255.0, color.at<Vec3b>(y,x)[1]/255.0, color.at<Vec3b>(y,x)[0]/255.0);
-         //   glVertex3f(x/k, y/k, disp.at<uint8_t>(y,x)/k);
-            glVertex3f(x/k, (depth.rows-y)/k, 2*disp.at<uint8_t>(y,x)/k);
-        }
-
+    /* for (int y=0; y<depth.rows; y++)
+         for (int x=0; x<depth.cols; x++)
+         {
+           //  glColor3f( 1.0f, 1.0f, 1.0f );
+          //   printf("d=%d ", depth.at<uint16_t>(y,x));
+          float k=depth.cols;
+          // float k=1.0;
+            //
+             glColor3f(color.at<Vec3b>(y,x)[2]/255.0, color.at<Vec3b>(y,x)[1]/255.0, color.at<Vec3b>(y,x)[0]/255.0);
+          //   glVertex3f(x/k, y/k, disp.at<uint8_t>(y,x)/k);
+             glVertex3f(x/k, (depth.rows-y)/k, 2*disp.at<uint8_t>(y,x)/k);
+         }
+    */
 
     //printf("\n");
 
     glEnd();
 
-   // glutSwapBuffers();
+    // glutSwapBuffers();
 }
 
 int main( int argc, char **argv )
@@ -80,28 +80,26 @@ int main( int argc, char **argv )
     }
 
     namedWindow(depth_window_name);
-    setMouseCallback(color_window_name, onMouse, NULL);
+    setMouseCallback(depth_window_name, onMouse, NULL);
     namedWindow(disp_window_name);
     setMouseCallback(disp_window_name, onMouse, NULL);
     namedWindow(color_window_name);
     setMouseCallback(color_window_name, onMouse, NULL);
 
-    namedWindow(cloud_window_name,CV_WINDOW_OPENGL|CV_WINDOW_NORMAL);
-    resizeWindow(cloud_window_name, 1280, 480);
-    setOpenGlDrawCallback(cloud_window_name,on_opengl,0);
+    //  namedWindow(cloud_window_name,CV_WINDOW_OPENGL|CV_WINDOW_NORMAL);
+    // resizeWindow(cloud_window_name, 1280, 480);
+//   setOpenGlDrawCallback(cloud_window_name,on_opengl,0);
 
     while (true)
     {
         // just get the data we need
         orsens.grabSensorData(); //camera images and pose
 
-
-
         imshow(color_window_name, orsens.getLeft());
         imshow(disp_window_name, orsens.getDispColored());
         imshow(depth_window_name, orsens.getDepth8());
 
-          updateWindow(cloud_window_name);
+        //  updateWindow(cloud_window_name);
 
         char c = (char)waitKey(1000/orsens.getRate());
 
