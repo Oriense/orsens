@@ -3,7 +3,6 @@
 #include <windows.h>
 #endif
 #include <GL/gl.h>
-//#include <GL/glut.h>
 
 #include "orsens.h"
 
@@ -25,10 +24,26 @@ int main( int argc, char **argv )
 
         Mat left = orsens.getLeft();
         Mat right = orsens.getRight();
+        Mat anaglyph = left.clone();
+        anaglyph = Scalar::all(0);
+
+        Mat l_channels[3];
+        Mat r_channels[3];
+
+        split(left, l_channels);
+        split(right, r_channels);
+
+        vector<Mat> channels;
+
+        channels.push_back(r_channels[0]);
+        channels.push_back(r_channels[2]);
+        channels.push_back(l_channels[1]);
+
+        merge(channels, anaglyph);
 
         imshow("left", left);
         imshow("right", right);
-       // imshow("anaglyph", img3d);
+        imshow("anaglyph", anaglyph);
 
         char c = (char)waitKey(1000/orsens.getRate());
 
