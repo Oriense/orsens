@@ -16,6 +16,8 @@ pkg_check_modules(swscale libswscale REQUIRED)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
 set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} lib)
+set(LIBRARIES_LIST ${avutil_LIBRARIES} ${avcodec_LIBRARIES} ${swscale_LIBRARIES} ${OpenCV_LIBS}) 
+
 LINK_DIRECTORIES(lib)
 
 include_directories(include
@@ -25,10 +27,7 @@ include_directories(include
 add_executable(orsens_sample_detection samples/detection_sample.cpp)
 target_link_libraries(orsens_sample_detection
   orsens
-  ${avutil_LIBRARIES}  
-  ${avcodec_LIBRARIES}
-  ${swscale_LIBRARIES}
-  ${OpenCV_LIBS} 
+  ${LIBRARIES_LIST}  
 )
 
 add_executable(orsens_sample_segmentation samples/segmentation_sample.cpp)
@@ -49,5 +48,11 @@ target_link_libraries(orsens_sample_viewer
   ${OpenCV_LIBS} 
   ${OPENGL_LIBRARIES}
   ${GLUT_LIBRARY}
+)
+
+add_executable(orsens_sample_vr samples/vr_sample.cpp)
+target_link_libraries(orsens_sample_vr
+  orsens
+  ${LIBRARIES_LIST}  
 )
 

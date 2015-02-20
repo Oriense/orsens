@@ -8,6 +8,12 @@
 
 #include "orcv.h"
 
+struct ScenePoint
+{
+    Point2i pt_image;
+    Point3f pt_world;
+};
+
 //general structure for all objects
 struct SceneObject
 {
@@ -29,9 +35,10 @@ class Orsens
 
 private:
 
+    static const int NO_DISTANCE = 0;
+    static const int NO_ANGLE = 361;
 
-
-     string data_path_;
+    string data_path_;
 
     uint16_t color_width_;
     uint16_t color_height_;
@@ -68,23 +75,11 @@ private:
     bool makeDepth();
     bool segmentFloor(Mat disp);
 
-    //obstacles
-   // int getNearestDistance(Mat depth, Rect roi);     // finds minimum distance in a zone
-   // Point3f getNearestPoint(Mat depth, Mat disp, Rect roi, Point3i& ipt);
-
-    // finds minimum distance in the zone
-    uint16_t nearestDistanceInDepth(Mat depth, Rect roi);
-
 public:
     Orsens() {};
     ~Orsens() {};
 
-
-    static const int NO_DISTANCE = 0;
-    static const int MAX_DISTANCE = 10000;
-    static const int NO_ANGLE = 361;
-
-      typedef enum
+    typedef enum
     {
         CAPTURE_DEPTH_ONLY=0, CAPTURE_LEFT_ONLY, CAPTURE_DEPTH_LEFT, CAPTURE_LEFT_RIGHT,
     } CaptureMode;
@@ -120,7 +115,8 @@ public:
     uint16_t getMinDistance(); //minimun possible distance camera able to measure
     uint16_t getMaxDistance(); //maximum possible distance
 
-    uint16_t getNearestDistance(Rect roi);
+    uint16_t getNearestDistance(Rect roi=Rect()); // finds nearest distance in the region, if roi is empty - in a whole image
+    ScenePoint getNearestPoint(Rect roi=Rect());
 
     //detection
     std::vector<Human> getHumans();
