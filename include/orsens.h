@@ -51,6 +51,7 @@ private:
     Mat left_, right_;
     Mat left_gray_, right_gray_;
     Mat disp_, disp_raw_, disp_raw_prev_, depth_, depth8_;
+    Mat point_cloud_;
     Mat segmentation_mask_;
 
     //what we've got processed
@@ -99,6 +100,7 @@ public:
     Mat getDispColored();
     Mat getDepth();
     Mat getDepth8(); //scaled to fit 8 bit
+    Mat getPointCloud();
     Mat getSegmentationMask();
 
     uint8_t getRate();
@@ -116,7 +118,7 @@ public:
     uint16_t getMaxDistance(); //maximum possible distance
 
     uint16_t getNearestDistance(Rect roi=Rect()); // finds nearest distance in the region, if roi is empty - in a whole image
-    ScenePoint getNearestPoint(Rect roi=Rect());
+    ScenePoint getNearestPoint(Rect roi=Rect()); // the same, but point
 
     //detection
     std::vector<Human> getHumans();
