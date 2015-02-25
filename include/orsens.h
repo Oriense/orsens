@@ -46,16 +46,17 @@ private:
     uint16_t depth_width_;
     uint16_t depth_height_;
     uint8_t depth_rate_;
+    float discrete_depth_step_;
 
     //images
     Mat left_, right_;
     Mat left_gray_, right_gray_;
-    Mat disp_, disp_raw_, disp_raw_prev_, depth_, depth8_;
+    Mat disp_, disp_raw_, disp_raw_prev_, depth_, depth8_, discrete_depth_, discrete_depth8_;
     Mat point_cloud_;
     Mat segmentation_mask_;
 
     //what we've got processed
-    bool got_gray_, got_depth_;
+    bool got_gray_, got_depth_, got_discrete_depth_;
 
     //camera info
     static const int DISPARITY_COUNT = 256;
@@ -74,6 +75,7 @@ private:
     //processing
     bool makeGray();
     bool makeDepth();
+    bool makeDiscreteDepth();
     bool segmentFloor(Mat disp);
 
 public:
@@ -89,9 +91,13 @@ public:
 
     static CaptureMode captureModeFromString(const std::string& str);
 
-    bool start(CaptureMode capture_mode=CAPTURE_DEPTH_ONLY, string data_path="../data", uint16_t color_width=640, uint16_t depth_width=640, uint8_t color_rate=15, uint8_t depth_rate=15, bool compress_color=false, bool compress_depth=false, uint16_t baseline=60);
+    bool start(CaptureMode capture_mode=CAPTURE_DEPTH_ONLY, string data_path="../data", uint16_t color_width=640, uint16_t depth_width=640, uint8_t color_rate=15, uint8_t depth_rate=15,
+               bool compress_color=false, bool compress_depth=false, uint16_t baseline=60);
     bool stop();
     bool grabSensorData();
+
+    //setting parametrs
+    void setDiscreteDepthStep(float step);
 
     //getting data
     Mat getLeft();
@@ -100,7 +106,9 @@ public:
     Mat getDispColored();
     Mat getDepth();
     Mat getDepth8(); //scaled to fit 8 bit
+    Mat getDiscreteDepth();
     Mat getPointCloud();
+    Mat getDiscreteDepth8();
     Mat getSegmentationMask();
 
     uint8_t getRate();
