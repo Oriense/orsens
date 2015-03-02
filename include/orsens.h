@@ -126,7 +126,7 @@ public:
     uint16_t getMaxDistance(); //maximum possible distance
 
     uint16_t getNearestDistance(Rect roi=Rect()); // finds nearest distance in the region, if roi is empty - in a whole image
-    ScenePoint getNearestPoint(Rect roi=Rect()); // the same, but point
+    ScenePoint getNearestPoint(Rect roi=Rect(), bool use_discrete_depth=false); // the same, but point
 
     //detection
     std::vector<Human> getHumans();
