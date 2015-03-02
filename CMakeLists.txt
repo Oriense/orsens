@@ -33,21 +33,13 @@ target_link_libraries(orsens_sample_detection
 add_executable(orsens_sample_segmentation samples/segmentation_sample.cpp)
 target_link_libraries(orsens_sample_segmentation
   orsens
-  ${avutil_LIBRARIES}  
-  ${avcodec_LIBRARIES}
-  ${swscale_LIBRARIES}
-  ${OpenCV_LIBS} 
+  ${LIBRARIES_LIST}  
 )
 
 add_executable(orsens_sample_viewer samples/viewer_sample.cpp)
 target_link_libraries(orsens_sample_viewer
   orsens
-  ${avutil_LIBRARIES}  
-  ${avcodec_LIBRARIES}
-  ${swscale_LIBRARIES}
-  ${OpenCV_LIBS} 
-  ${OPENGL_LIBRARIES}
-  ${GLUT_LIBRARY}
+  ${LIBRARIES_LIST}
 )
 
 add_executable(orsens_sample_vr samples/vr_sample.cpp)
@@ -56,3 +48,10 @@ target_link_libraries(orsens_sample_vr
   ${LIBRARIES_LIST}  
 )
 
+add_executable(orsens_sample_pointcloud samples/pointcloud_sample.cpp)
+target_link_libraries(orsens_sample_pointcloud
+  orsens
+  ${LIBRARIES_LIST}
+  ${OPENGL_LIBRARIES}
+  ${GLUT_LIBRARY}
+)
