@@ -35,3 +35,5 @@ or
 sudo modprobe uvcvideo nodrop=1
 ```
 http://www.youtube.com/watch?v=ynnW0aibcI4
+
+To make this permanent - edit and copy [uvcvideo.conf](https://github.com/Oriense/orsens/blob/master/uvcvideo.conf) to /etc/modprobe.d
