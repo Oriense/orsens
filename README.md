@@ -4,6 +4,8 @@
 
 ROS users can clone the [driver](https://github.com/Oriense/orsens_ros) and build with catkin
 
+Example of running samples and ROS nodes - http://www.youtube.com/watch?v=91DyxcnwOBM
+
 ## Functionality
 Camera itself provides depth and rgb stream via USB, and SDK contains set of ready-to-use computer vision functions 
 
