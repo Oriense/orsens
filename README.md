@@ -22,6 +22,7 @@ Coming soon
 
 ## Troubleshooting 
 "Select timeout" or "Cannot allocate memory" errors - it's a problem of USB bandwidth, you can read more here - http://www.ideasonboard.org/uvc/faq/
+
 Try to tune uvcvideo:
 ```
 sudo rmmod uvcvideo
