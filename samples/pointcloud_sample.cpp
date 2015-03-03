@@ -5,6 +5,11 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
+#include <fstream>
+#include <iostream>
+#include <vector>
+using namespace std;
+
 #include "orsens.h"
 
 Orsens orsens;
@@ -15,6 +20,72 @@ float angx=0, angy=M_PI/2;
 float angstep=0.05;
 
 const String cloud_window_name = "point cloud";
+
+bool saveCloud(string cloud_filename = "test.ply", bool comma_decimal=false)
+{
+    ofstream cloud_file( cloud_filename.c_str() );
+
+    if ( !cloud_file )
+    {
+        cerr << "Error opening output file: " << cloud_filename << "!" << endl;
+        exit( 1 );
+    }
+
+    const int pointNum    = cloud.cols*cloud.rows;
+
+    cloud_file << "ply" << endl;
+    cloud_file << "format ascii 1.0" << endl;
+    cloud_file << "element vertex " << pointNum << endl;
+    cloud_file << "property float x" << endl;
+    cloud_file << "property float y" << endl;
+    cloud_file << "property float z" << endl;
+    cloud_file << "property uchar red" << endl;
+    cloud_file << "property uchar green" << endl;
+    cloud_file << "property uchar blue" << endl;
+    cloud_file << "end_header" << endl;
+
+    for (int y=0; y<cloud.rows; y++)
+        for (int x=0; x<cloud.cols; x++)
+        {
+            for (int i=0; i<3; i++)
+            {
+                float f = cloud.at<cv::Vec3f>(y,x)[i];
+
+                if (!comma_decimal)
+                {
+                    cloud_file << f << " ";
+                }
+                else //for those dumb viewers which needs , as floating point separator (i.e. meshlab for ubuntu)
+                {
+                    ostringstream ss;
+                    ss << f;
+                    string s(ss.str());
+
+                    size_t n = s.find(".");
+
+                    if (n!=string::npos)
+                    {
+                        string s1 = s.substr(0, n);
+                        string s2 = s.substr(n+1);
+                        s = s1+","+s2;
+                    }
+
+                    cloud_file << s << " ";
+
+                }
+
+            }
+
+            for (int i=0; i<3; i++)
+            {
+                uint8_t u = color.at<Vec3b>(y,x)[2-i];
+
+                cloud_file << static_cast<int>(u) << " ";
+            }
+
+            cloud_file << endl;
+        }
+}
 
 void rotateCamera()
 {
@@ -107,6 +178,19 @@ int main( int argc, char **argv )
 
         case 84:
             angy-=angstep;
+            break;
+
+        case 's':
+            time_t rawtime;
+            struct tm * timeinfo;
+
+            time ( &rawtime );
+            timeinfo = localtime ( &rawtime );
+            char filename[256];
+            strftime(filename, sizeof(filename), "%Y%m%d-%H%M%S.ply", timeinfo);
+            printf("saving point cloud\n");
+            saveCloud(filename, true);
+            printf("saved to %s\n", filename);
             break;
         }
 
