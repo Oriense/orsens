@@ -10,7 +10,7 @@ const String left_window_name = "left";
 const String right_window_name = "right";
 const String depth_window_name = "depth";
 
-using namespace std;
+using namespace std;	
 
 Orsens orsens;
 
