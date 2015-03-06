@@ -6,22 +6,39 @@
 
 #include "orsens.h"
 
+using namespace std;
+
 Orsens orsens;
 Mat left, right;
 
 int main( int argc, char **argv )
 {
-    if (!orsens.start(Orsens::CAPTURE_LEFT_RIGHT))
+    int color_width=1280;
+
+    for( int i = 1; i < argc; i++ )
+    {
+        if( !strcmp( argv[i], "--help" ) || !strcmp( argv[i], "-h" ) )
+        {
+            cout << "-l      low resolution (if not enough usb bandwidth)" << endl;
+            exit(0);
+        }
+        else if( !strcmp( argv[i], "-l" ) )
+        {
+            color_width = 640;
+        }
+    }
+
+    if (!orsens.start(Orsens::CAPTURE_LEFT_RIGHT, "", color_width))
     {
         printf("unable to start\n");
         return -1;
     }
 
-	 namedWindow("anaglyph", WINDOW_NORMAL);
+    namedWindow("anaglyph", WINDOW_NORMAL);
+    resizeWindow("anaglyph", 1280, 960);
 
     while (true)
     {
-        // just get the data we need
         orsens.grabSensorData();
 
         Mat left = orsens.getLeft();
@@ -51,6 +68,21 @@ int main( int argc, char **argv )
 
         if (c==27)
             break;
+
+        switch (c)
+        {
+        case 's':
+            time_t rawtime;
+            struct tm * timeinfo;
+
+            time ( &rawtime );
+            timeinfo = localtime ( &rawtime );
+            char filename[256];
+            strftime(filename, sizeof(filename), "anaglyph-%Y%m%d-%H%M%S.png", timeinfo);
+            imwrite(filename, anaglyph);
+            printf("saved to %s\n", filename);
+            break;
+        }
 
     }
 
