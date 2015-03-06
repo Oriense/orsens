@@ -17,6 +17,8 @@ int main( int argc, char **argv )
         return -1;
     }
 
+	 namedWindow("anaglyph", WINDOW_NORMAL);
+
     while (true)
     {
         // just get the data we need
