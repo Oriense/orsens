@@ -10,12 +10,12 @@ Example of running samples and ROS nodes - http://www.youtube.com/watch?v=91Dyxc
 Camera itself provides depth and rgb stream via USB, and SDK contains set of ready-to-use computer vision functions 
 
 Currenlty implemented:
-- Windows and Linux support, [ROS driver](https://github.com/Oriense/orsens_ros)
-- Depthmap filtering
+- Windows and Linux support (Ubuntu), [ROS driver](https://github.com/Oriense/orsens_ros)
+- Image and depthmap processing
 - Measuring 
 - Obstacle detection
-- Scene segmentation: floor
-- Object detection: faces
+- Scene segmentation
+- Face detection and recognition
 
 Coming soon
 - Integration with SLAM implementations

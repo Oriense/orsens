@@ -17,8 +17,7 @@ int main()
 
     while (true)
     {
-        // just get the data we need
-        orsens.grabSensorData(); //camera images and pose
+        orsens.grabSensorData();
         std::vector<Human> humans = orsens.getHumans(); //people in the scene
 
         // some visualization
@@ -41,7 +40,6 @@ int main()
         imshow(color_window_name, color);
         imshow(depth_window_name, orsens.getDispColored());
 
-        ///TODO get rate from lib
         char c = waitKey(1000/orsens.getRate());
 
         if (c==27)
