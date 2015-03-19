@@ -23,17 +23,23 @@ Coming soon
 - and much more
 
 ## Troubleshooting 
-"Select timeout" or "Cannot allocate memory" errors - it's a problem of USB bandwidth, you can read more here - http://www.ideasonboard.org/uvc/faq/
+### 1. Capturing
+* **"Select timeout" or "Cannot allocate memory" messages**
 
-Try to tune uvcvideo:
-```
-sudo rmmod uvcvideo
-sudo modprobe uvcvideo quirks=0x80 
-```
-or 
-```
-sudo modprobe uvcvideo nodrop=1
-```
-http://www.youtube.com/watch?v=ynnW0aibcI4
+ It's a problem of USB bandwidth, you can read more here - http://www.ideasonboard.org/uvc/faq/
 
-To make this permanent - edit and copy [uvcvideo.conf](https://github.com/Oriense/orsens/blob/master/uvcvideo.conf) to /etc/modprobe.d
+ Try to tune uvcvideo:
+ ```
+ sudo rmmod uvcvideo
+ sudo modprobe uvcvideo quirks=0x80 (or nodrop=1)
+ ```
+
+ To make this permanent - edit and copy [uvcvideo.conf](https://github.com/Oriense/orsens/blob/master/uvcvideo.conf) to /etc/modprobe.d
+ 
+ http://www.youtube.com/watch?v=ynnW0aibcI4
+
+* **pPin is NULL!**
+
+ It means that camera is not detected
+ 
+ Check connection or try to remove any other webcams  (or disable integrated one)
