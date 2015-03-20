@@ -1,6 +1,7 @@
 #include <iostream>
 #ifdef _WIN32
 #include <windows.h>
+#include <ctime>
 #endif
 #include <GL/gl.h>
 

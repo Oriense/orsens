@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "segmentation", "segmentatio
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pointcloud", "pointcloud.vcxproj", "{278D18E6-ABCC-4ECA-BC6D-6C62341F2F8C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "biometrics", "biometrics.vcxproj", "{A3560B08-FC13-472D-97DB-2796587327F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -43,6 +45,10 @@ Global
 		{278D18E6-ABCC-4ECA-BC6D-6C62341F2F8C}.Debug|Win32.Build.0 = Debug|Win32
 		{278D18E6-ABCC-4ECA-BC6D-6C62341F2F8C}.Release|Win32.ActiveCfg = Release|Win32
 		{278D18E6-ABCC-4ECA-BC6D-6C62341F2F8C}.Release|Win32.Build.0 = Release|Win32
+		{A3560B08-FC13-472D-97DB-2796587327F7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A3560B08-FC13-472D-97DB-2796587327F7}.Debug|Win32.Build.0 = Debug|Win32
+		{A3560B08-FC13-472D-97DB-2796587327F7}.Release|Win32.ActiveCfg = Release|Win32
+		{A3560B08-FC13-472D-97DB-2796587327F7}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

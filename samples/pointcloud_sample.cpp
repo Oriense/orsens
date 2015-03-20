@@ -161,24 +161,31 @@ int main( int argc, char **argv )
 
         updateWindow(cloud_window_name);
 
-        char c = (char)waitKey(1000/orsens.getRate());
+        int c = waitKey(1000/orsens.getRate());
+
+		printf("key=%d\n", c);
 
         switch (c)
         {
         case 81:
-            angx-=angstep;
-            break;
-
-        case 82:
-            angy+=angstep;
-            break;
-
-        case 83:
+		case 2424832:
             angx+=angstep;
             break;
 
+        case 82:
+		case 2490368:
+			 angy-=angstep;
+            break;
+
+        case 83:
+		case 2555904:
+			angx-=angstep;
+            
+            break;
+
         case 84:
-            angy-=angstep;
+		case 2621440:
+			angy+=angstep;           
             break;
 
         case 's':
