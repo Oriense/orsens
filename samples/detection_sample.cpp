@@ -5,11 +5,40 @@
 const String color_window_name = "color";
 const String depth_window_name = "depth";
 
+using namespace std;	
+
 Orsens orsens;
 
-int main()
+static void printCommandLineParams()
 {
-    if (!orsens.start(Orsens::CAPTURE_DEPTH_LEFT))
+    cout << "-data     Path to data folder (default: ../data)" << endl ;
+}
+
+int main(int argc, char **argv)
+{
+    int mode = Orsens::CAPTURE_DEPTH_LEFT;
+    bool compress = false;
+    string data_path="../data";
+    int color_width=640;
+    int depth_width=640;
+    int color_rate=15;
+    int depth_rate=15;
+
+    for( int i = 1; i < argc; i++ )
+    {
+        if( !strcmp( argv[i], "--help" ) || !strcmp( argv[i], "-h" ) )
+        {
+            printCommandLineParams();
+            exit(0);
+        }
+        else if( !strcmp( argv[i], "-data" ) )
+        {
+            data_path = argv[++i];
+            printf("data path: %s\n", data_path.c_str());
+        }
+    }
+
+    if (!orsens.start((Orsens::CaptureMode)mode, data_path, color_width, depth_width, color_rate, depth_rate, compress))
     {
         printf("unable to start\n");
         return -1;
