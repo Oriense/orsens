@@ -36,7 +36,8 @@ int main( int argc, char **argv )
     }
 
     namedWindow("anaglyph", WINDOW_NORMAL);
-    resizeWindow("anaglyph", 1280, 960);
+   // printf("%s\n", CV_VERSION);
+   // resizeWindow("anaglyph", 1280, 960);
 
     while (true)
     {
