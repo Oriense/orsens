@@ -1,8 +1,9 @@
 # SDK for OrSens 3d-camera
 
-**bin** directory contains prebuilt examples, **samples** directory - source code of the examples: you can use CMake or Visual Studio (samples/vs_solution) to build it
+**bin** directory contains prebuilt examples, **samples** directory - source code of the examples: you can use CMake or Visual Studio (samples/vs_solution) to build it.
+**lib** contains core libraries of the SDK, as well as some 3rd-parties.
 
-ROS users can clone the [driver](https://github.com/Oriense/orsens_ros) and build with catkin
+ROS users can clone the [driver](https://github.com/Oriense/orsens_ros) and build with catkin.
 
 Example of running samples and ROS nodes - http://www.youtube.com/watch?v=91DyxcnwOBM
 
