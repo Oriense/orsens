@@ -3,7 +3,7 @@ ROS package is [here](https://github.com/Oriense/orsens_ros).
 ## Overview
 [bin](https://github.com/Oriense/orsens/tree/master/bin) directory - prebuilt examples of functionality.
 
-[lib](https://github.com/Oriense/orsens/tree/master/lib) - core libraries of the SDK, as well as some 3rd-parties. x86, [x64](https://github.com/Oriense/orsens/tree/master/lib/x64) and [arm](https://github.com/Oriense/orsens/tree/master/lib/arm) verisons available.
+[lib](https://github.com/Oriense/orsens/tree/master/lib) - core libraries of the SDK, as well as some 3rd-parties. x86, [x64](https://github.com/Oriense/orsens/tree/master/lib/x64) and [arm](https://github.com/Oriense/orsens/tree/master/lib/arm) versions available.
 
 [data](https://github.com/Oriense/orsens/tree/master/data) - files needed for some functions: calibration data, trained classifiers etc.
 
@@ -11,25 +11,39 @@ ROS package is [here](https://github.com/Oriense/orsens_ros).
 
 Example of running samples and ROS nodes - http://www.youtube.com/watch?v=91DyxcnwOBM.
 
-## Building
+## Build
 For Linux use [CMake](https://github.com/Oriense/orsens/tree/master/CMakeLists.txt).
-
 For Windows - Visual Studio [solution](https://github.com/Oriense/orsens/tree/master/samples/vs_solution).
 
+#####Supported Platforms
+Currently tested on:
+* Windows 7, 8  (32-bit and 64-bit)
+* Ubuntu 12.04, 14.04 (32-bit and 64-bit)
+* Lubuntu 14.04 (ARM)
+
+#####Dependencies. 
+For Windows all dependencies are provided.
+
+For Linux, mandatory: libopencv-dev libavutil-dev libavcodec-dev libswscale-dev 
+
+Optional:
+* OpenGL and it's support in OpenCV, GLUT - for visualization in some samples (use WITH_OPENGL cmake option to turn in on/off, default - on)
+* OpenBR (provided) and Qt5 - for biometrics functionality (WITH_BIOMETRICS, default - off)
+
 ## Functionality
-Camera itself provides depth and rgb stream via USB, and SDK contains set of ready-to-use computer vision functions 
+Camera itself provides depth and rgb stream via USB, and SDK contains set of ready-to-use computer vision functions. 
 
 Currenlty implemented:
-- Windows and Linux support (Ubuntu), [ROS driver](https://github.com/Oriense/orsens_ros)
 - Image and depthmap processing
 - Measuring 
-- Obstacle detection
-- Scene segmentation
-- Face detection and recognition
+- [Obstacle detection](https://github.com/Oriense/orsens/blob/master/samples/obstacle_avoidance_sample.cpp)
+- [Scene segmentation](https://github.com/Oriense/orsens/blob/master/samples/segmentation_sample.cpp)
+- [Face detection](https://github.com/Oriense/orsens/blob/master/samples/detection_sample.cpp) and [recognition](https://github.com/Oriense/orsens/blob/master/samples/biometrics_sample.cpp)
 
-Coming soon
+Coming soon:
 - Integration with SLAM implementations
 - Tracking
+- AR, VR
 - and much more
 
 ## Troubleshooting 
