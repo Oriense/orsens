@@ -1,9 +1,13 @@
 # SDK for OrSens 3d-camera
+ROS package is [here](https://github.com/Oriense/orsens_ros)
+## Overview
+[bin](https://github.com/Oriense/orsens/tree/master/bin) directory - prebuilt examples of functionality.
 
-**bin** directory contains prebuilt examples, **samples** directory - source code of the examples: you can use CMake or Visual Studio (samples/vs_solution) to build it.
-**lib** contains core libraries of the SDK, as well as some 3rd-parties.
+[samples](https://github.com/Oriense/orsens/tree/master/samples)  - source code of the examples. 
 
-ROS users can clone the [driver](https://github.com/Oriense/orsens_ros) and build with catkin.
+[lib](https://github.com/Oriense/orsens/tree/master/lib) - core libraries of the SDK, as well as some 3rd-parties. x86, [x64](https://github.com/Oriense/orsens/tree/master/lib/x64) and [arm](https://github.com/Oriense/orsens/tree/master/lib/arm) verisons available.
+
+[data](https://github.com/Oriense/orsens/tree/master/data) - files needed for some functions: calibration data, trained classifiers etc. 
 
 Example of running samples and ROS nodes - http://www.youtube.com/watch?v=91DyxcnwOBM
 
