@@ -1,15 +1,20 @@
 # SDK for OrSens 3d-camera
-ROS package is [here](https://github.com/Oriense/orsens_ros)
+ROS package is [here](https://github.com/Oriense/orsens_ros).
 ## Overview
 [bin](https://github.com/Oriense/orsens/tree/master/bin) directory - prebuilt examples of functionality.
 
-[samples](https://github.com/Oriense/orsens/tree/master/samples)  - source code of the examples. 
-
 [lib](https://github.com/Oriense/orsens/tree/master/lib) - core libraries of the SDK, as well as some 3rd-parties. x86, [x64](https://github.com/Oriense/orsens/tree/master/lib/x64) and [arm](https://github.com/Oriense/orsens/tree/master/lib/arm) verisons available.
 
-[data](https://github.com/Oriense/orsens/tree/master/data) - files needed for some functions: calibration data, trained classifiers etc. 
+[data](https://github.com/Oriense/orsens/tree/master/data) - files needed for some functions: calibration data, trained classifiers etc.
 
-Example of running samples and ROS nodes - http://www.youtube.com/watch?v=91DyxcnwOBM
+[samples](https://github.com/Oriense/orsens/tree/master/samples)  - source code of the examples. 
+
+Example of running samples and ROS nodes - http://www.youtube.com/watch?v=91DyxcnwOBM.
+
+## Building
+For Linux use [CMake](https://github.com/Oriense/orsens/tree/master/CMakeLists.txt).
+
+For Windows - Visual Studio [solution](https://github.com/Oriense/orsens/tree/master/samples/vs_solution).
 
 ## Functionality
 Camera itself provides depth and rgb stream via USB, and SDK contains set of ready-to-use computer vision functions 
