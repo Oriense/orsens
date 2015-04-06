@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(orsens)
 
 option(WITH_BIOMETRICS "Build biometrics lib and samples" OFF)
+option(WITH_AR "Build AR lib and samples" ON)
 option(WITH_OPENGL "Build OpenGL-based samples" ON)
 
 ## pkg-config libraries
@@ -66,20 +67,32 @@ set(LIBRARIES_LIST ${avutil_LIBRARIES} ${avcodec_LIBRARIES} ${swscale_LIBRARIES}
 include_directories(include
 )
 
-find_library(OPENBR
-    NAMES openbr
-    HINTS "${LIB_DIRECTORY}"
-)
-
 find_library(ORSENS
     NAMES orsens
     HINTS "${LIB_DIRECTORY}"
 )
 
+if(WITH_BIOMETRICS)
+find_library(OPENBR
+    NAMES openbr
+    HINTS "${LIB_DIRECTORY}"
+)
 find_library(ORSENS_BIOMETRICS
     NAMES orsens_biometrics
     HINTS "${LIB_DIRECTORY}"
 )
+endif()
+
+if(WITH_AR)
+find_library(ARUCO
+    NAMES aruco
+    HINTS "lib"
+)
+find_library(ORSENS_AR
+    NAMES orsens_ar
+    HINTS "${LIB_DIRECTORY}"
+)
+endif()
 
 add_executable(orsens_sample_viewer samples/viewer_sample.cpp)
 target_link_libraries(orsens_sample_viewer
@@ -129,5 +142,15 @@ target_link_libraries(orsens_sample_biometrics
   "${OPENBR}"
   ${LIBRARIES_LIST} 
   ${Qt5Core_LIBRARIES}
+)
+endif()
+
+if(WITH_AR)
+add_executable(orsens_sample_ar samples/ar_sample.cpp)
+target_link_libraries(orsens_sample_ar
+  "${ORSENS}"
+  "${ORSENS_AR}"
+  "${ARUCO}"
+  ${LIBRARIES_LIST} 
 )
 endif()

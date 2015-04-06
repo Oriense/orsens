@@ -7,6 +7,7 @@
 #include <stdio.h>
 
 #include "orcv.h"
+#include "orar.h"
 
 struct ScenePoint
 {
@@ -58,6 +59,9 @@ private:
     uint16_t depth_height_;
     uint8_t depth_rate_;
     float discrete_depth_step_;
+
+    uint16_t left_width_;
+    uint16_t left_height_;
 
     //images
     Mat left_, right_;
@@ -144,10 +148,17 @@ public:
     ScenePoint getNearestPoint(Rect roi=Rect()); // the same, but point
     Obstacle getNearestObstacle(Rect roi=Rect());
 
+    ScenePoint getFarestPoint(uint16_t width=100, Rect roi=Rect()); //finds farest point with given x-zone width in the region, if roi is empty - in a whole image
+
     //detection
     std::vector<Human> getHumans();
-    //Human getNearestHumanBiometrics(bool detect_gender=true, bool detect_age=false);
     bool getNearestHumanBiometrics(Human &human);
+
+    //ar
+    bool initAR(float marker_size=0.04);
+    void deinitAR();
+    vector<Marker> getMarkers(uint8_t camera_num=0);
+    CameraParameters getARCameraParametres(uint8_t camera_num);
 
     //misc
     Scalar dist2rgb(uint16_t dist);
