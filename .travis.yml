@@ -15,10 +15,11 @@ notifications:
 before_install: # Use this to prepare the system to install prerequisites or dependencies
  
 install: # Use this to install any prerequisites or dependencies necessary to run your build
-  - sudo apt-get install libopencv-dev
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq libopencv-dev
 
 before_script: # Use this to prepare your build for testing e.g. copy database configurations, environment variables, etc.
-  - cmake .
+  - cmake . -D WITH_BIOMETRICS=ON
 
 script: # All commands must exit with code 0 on success. Anything else is considered failure.
   - make
