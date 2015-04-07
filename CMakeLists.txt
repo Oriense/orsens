@@ -86,7 +86,7 @@ endif()
 if(WITH_AR)
 find_library(ARUCO
     NAMES aruco
-    HINTS "lib"
+    HINTS "${LIB_DIRECTORY}"
 )
 find_library(ORSENS_AR
     NAMES orsens_ar
