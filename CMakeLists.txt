@@ -3,7 +3,7 @@ project(orsens)
 
 option(WITH_BIOMETRICS "Build biometrics lib and samples" OFF)
 option(WITH_AR "Build AR lib and samples" ON)
-option(WITH_OPENGL "Build OpenGL-based samples" ON)
+option(WITH_OPENGL "Build OpenGL based samples. Turn on just if you have OpenCV with OpenGL support" OFF)
 
 ## pkg-config libraries
 find_package(PkgConfig REQUIRED)
@@ -144,16 +144,6 @@ target_link_libraries(orsens_sample_vr
   ${LIBRARIES_LIST}  
 )
 
-if(WITH_OPENGL)
-add_executable(orsens_sample_pointcloud samples/pointcloud_sample.cpp)
-target_link_libraries(orsens_sample_pointcloud
-  "${ORSENS}"
-  ${LIBRARIES_LIST}
-  ${OPENGL_LIBRARIES}
-  ${GLUT_LIBRARY}
-)
-endif()
-
 if(WITH_BIOMETRICS)
 add_executable(orsens_sample_biometrics samples/biometrics_sample.cpp)
 target_link_libraries(orsens_sample_biometrics
@@ -172,5 +162,15 @@ target_link_libraries(orsens_sample_ar
   "${ORSENS_AR}"
   "${ARUCO}"
   ${LIBRARIES_LIST} 
+)
+endif()
+
+if(WITH_OPENGL)
+add_executable(orsens_sample_pointcloud samples/pointcloud_sample.cpp)
+target_link_libraries(orsens_sample_pointcloud
+  "${ORSENS}"
+  ${LIBRARIES_LIST}
+  ${OPENGL_LIBRARIES}
+  ${GLUT_LIBRARY}
 )
 endif()

@@ -27,4 +27,4 @@ before_script: # Use this to prepare your build for testing e.g. copy database c
   - cmake -D WITH_BIOMETRICS=ON . 
 
 script: # All commands must exit with code 0 on success. Anything else is considered failure.
-  - make
+  - make -i
