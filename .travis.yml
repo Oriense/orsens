@@ -21,7 +21,7 @@ before_install: # Use this to prepare the system to install prerequisites or dep
 install: # Use this to install any prerequisites or dependencies necessary to run your build
   - sudo apt-get update -qq
   - sudo apt-get install -qq libopencv-dev
-  #- sudo apt-get install -qq qt5-default libqt5svg5-dev qtcreator
+  - sudo apt-get install -qq qt5-default libqt5svg5-dev
 
 before_script: # Use this to prepare your build for testing e.g. copy database configurations, environment variables, etc.
   - cmake -D WITH_BIOMETRICS=ON . 

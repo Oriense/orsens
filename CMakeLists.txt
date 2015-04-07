@@ -107,6 +107,13 @@ find_library(ORSENS_AR
 )
 endif()
 
+if (ARUCO AND ORSENS_AR)
+  message(STATUS "Found AR libs.")
+else()
+  message(STATUS "AR libs not found, AR functionality is off.")
+  set(WITH_AR OFF)
+endif()
+
 add_executable(orsens_sample_viewer samples/viewer_sample.cpp)
 target_link_libraries(orsens_sample_viewer
   "${ORSENS}"
@@ -158,7 +165,7 @@ target_link_libraries(orsens_sample_biometrics
 )
 endif()
 
-if(WITH_AR)
+if(WITH_AR AND ARUCO AND ORSENS_AR)
 add_executable(orsens_sample_ar samples/ar_sample.cpp)
 target_link_libraries(orsens_sample_ar
   "${ORSENS}"
