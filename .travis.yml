@@ -19,7 +19,7 @@ notifications:
 before_install: # Use this to prepare the system to install prerequisites or dependencies
  
 install: # Use this to install any prerequisites or dependencies necessary to run your build
-  - sudo apt-add-repository ppa:ubuntu-sdk-team/ppa
+  - sudo apt-add-repository ppa:ubuntu-sdk-team/ppa -y
   - sudo apt-get update -qq
   - sudo apt-get install -qq libopencv-dev
   - sudo apt-get install -qq qt5-default libqt5svg5-dev
