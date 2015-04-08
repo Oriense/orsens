@@ -13,7 +13,7 @@ find_package(OpenGL QUIET)
 find_package(GLUT QUIET)
 endif()
 if(WITH_BIOMETRICS)
-  find_package(Qt5 QUIET COMPONENTS Core)
+  find_package(Qt5Core QUIET)
 endif()
 
 if(Qt5Core_INCLUDE_DIRS AND Qt5Core_LIBRARIES)
