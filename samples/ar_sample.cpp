@@ -1,4 +1,5 @@
 #include "orsens.h"
+#include <opencv2/calib3d/calib3d.hpp>
 
 using namespace std;
 
@@ -54,9 +55,14 @@ int main( int argc, char **argv )
 
         Mat left = orsens.getLeft();
 
+        cout << endl << "left ";
+
         for (unsigned int i=0; i<left_markers.size(); i++)
         {
             cout<<endl<<left_markers[i];
+            Mat Rmat;
+            cv::Rodrigues(left_markers[i].Rvec, Rmat);
+            cout<<endl << Rmat;
 
             left_markers[i].draw(left,Scalar(0,0,255),1);
 
@@ -71,6 +77,7 @@ int main( int argc, char **argv )
 
         if (mode==1)
         {
+            cout<<endl << "right ";
             vector<Marker> right_markers = orsens.getMarkers(1);
 
             Mat right = orsens.getRight();
@@ -78,6 +85,9 @@ int main( int argc, char **argv )
             for (unsigned int i=0; i<right_markers.size(); i++)
             {
                 cout<<endl<<right_markers[i];
+                Mat Rmat_right;
+                cv::Rodrigues(right_markers[i].Rvec, Rmat_right);
+                cout<<endl << Rmat_right;
 
                 right_markers[i].draw(right,Scalar(0,0,255),1);
 
