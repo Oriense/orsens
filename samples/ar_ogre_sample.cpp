@@ -33,7 +33,7 @@ int initOgreAR(aruco::CameraParameters camParams, unsigned char* buffer, std::st
 {
 	/// INIT OGRE FUNCTIONS
 #ifdef _WIN32
-  	root = new Ogre::Root(resourcePath + "plugins_win.cfg", resourcePath + "ogre.cfg");
+  	root = new Ogre::Root(resourcePath + "plugins_win.cfg", resourcePath + "ogre_win.cfg");
 #else
 	root = new Ogre::Root(resourcePath + "plugins.cfg", resourcePath + "ogre.cfg");
 #endif	
