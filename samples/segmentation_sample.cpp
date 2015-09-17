@@ -14,19 +14,20 @@ int main()
 
     while (true)
     {
-        // just get the data we need
+        // just getget the data we need
         orsens.grabSensorData();
 
-        Mat segmentation_mask = orsens.getSegmentationMask(); //segment floor
+        //Mat segmentation_mask = orsens.getSegmentationMask(); //segment floor
 
-        imshow("depth", orsens.getDispColored());
-        imshow("segmentation mask", segmentation_mask);
+        imshow("depth", orsens.getDisp(true));
+        //imshow("segmentation mask", segmentation_mask);
 
-        bitwise_not ( segmentation_mask, segmentation_mask );
-        Mat segmented;
-        orsens.getLeft().copyTo(segmented, segmentation_mask);
+        //bitwise_not ( segmentation_mask, segmentation_mask );
+        //Mat segmented;
+        //orsens.getLeft().copyTo(segmented, segmentation_mask);
+        orsens.removeFloor();
 
-        imshow("segmented", segmented);
+        imshow("segmented", orsens.getDisp(true));
 
         char c = waitKey(1000/orsens.getRate());
 

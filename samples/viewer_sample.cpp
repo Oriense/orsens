@@ -10,7 +10,7 @@ const String left_window_name = "left";
 const String right_window_name = "right";
 const String depth_window_name = "depth";
 
-using namespace std;	
+using namespace std;
 
 Orsens orsens;
 
@@ -47,7 +47,7 @@ int main( int argc, char **argv )
 {
     int mode = Orsens::CAPTURE_DEPTH_LEFT;
     bool compress = false;
-    string data_path="../data";
+    string data_path="../../data";
     int color_width=640;
     int depth_width=640;
     int color_rate=15;
@@ -133,7 +133,7 @@ int main( int argc, char **argv )
         {
         case Orsens::CAPTURE_DEPTH_ONLY:
             if (colorize_depth)
-                imshow(depth_window_name, orsens.getDispColored());
+                imshow(depth_window_name, orsens.getDisp(true));
             else
                 imshow(depth_window_name, orsens.getDisp());
             break;
@@ -145,7 +145,7 @@ int main( int argc, char **argv )
         case Orsens::CAPTURE_DEPTH_LEFT:
 
             if (colorize_depth)
-                imshow(depth_window_name, orsens.getDispColored());
+                imshow(depth_window_name, orsens.getDisp(true));
             else
                 imshow(depth_window_name, orsens.getDisp());
 

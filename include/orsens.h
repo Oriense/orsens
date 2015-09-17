@@ -42,6 +42,14 @@ struct Obstacle : SceneObject
     Point3f max_pt_world;
 };
 
+struct SceneInfo
+{
+    uint16_t nearest_distance;
+    uint8_t nearest_disp;
+    ScenePoint nearest_point;
+    Obstacle nearest_obstacle;
+};
+
 class Orsens
 {
 
@@ -58,7 +66,6 @@ private:
     uint16_t depth_width_;
     uint16_t depth_height_;
     uint8_t depth_rate_;
-    float discrete_depth_step_;
 
     uint16_t left_width_;
     uint16_t left_height_;
@@ -66,12 +73,15 @@ private:
     //images
     Mat left_, right_;
     Mat left_gray_, right_gray_;
-    Mat disp_, disp_raw_, disp_raw_prev_, depth_, depth8_, discrete_depth_, discrete_depth8_;
+    Mat disp_, disp_raw_, disp_raw_prev_, disp_src_, depth_, depth8_;
     Mat point_cloud_;
     Mat segmentation_mask_;
 
     //what we've got processed
-    bool got_gray_, got_depth_, got_discrete_depth_;
+    bool got_gray_, got_depth_, got_seg_mask;
+
+    //parametrs
+    Rect roi_;
 
     //camera info
     static const int DISPARITY_COUNT = 256;
@@ -83,15 +93,19 @@ private:
     uint16_t cy_;
     uint16_t baseline_;
     uint16_t focal_;
+    float fov_;
 
     //scene info
     std::vector<Human> humans_;
+    SceneInfo scene_info_;
 
     //processing
     bool makeGray();
     bool makeDepth();
-    bool makeDiscreteDepth();
-    bool segmentFloor(Mat disp);
+    bool makeNearestDistance();
+    bool makeNearestPoint();
+    bool makeNearestObstacle();
+    bool segmentFloor();
 
 public:
     Orsens() {};
@@ -106,30 +120,28 @@ public:
 
     static CaptureMode captureModeFromString(const std::string& str);
 
-    bool start(CaptureMode capture_mode=CAPTURE_DEPTH_ONLY, string data_path="../data", uint16_t color_width=640, uint16_t depth_width=640, uint8_t color_rate=15, uint8_t depth_rate=15,
-               bool compress_color=false, bool compress_depth=false, uint16_t baseline=60);
+    bool start(CaptureMode capture_mode=CAPTURE_DEPTH_ONLY, string data_path="../../data", uint16_t color_width=640, uint16_t depth_width=640, uint8_t color_rate=15, uint8_t depth_rate=15,
+               bool compress_color=false, bool compress_depth=false, float fov=60.0, uint16_t baseline=60);
     bool stop();
 
-    bool initBiometrics(bool init_gender_estimation=true, bool init_age_estimation=false);
-    void deinitBiometrics();
+    //setting parametrs
+    void setRoi(Rect); //set region of interest, default: whole image
 
     bool grabSensorData();
 
-    //setting parametrs
-    void setDiscreteDepthStep(float step);
+    //processing
+    bool filterDisp(uint16_t maxSpeckleSize=1000); //filter speckles
+    bool removeFloor(); //remove floor points
 
     //getting data
     Mat getLeft();
     Mat getRight();
-    Mat getDisp();
-    Mat getDispColored();
-    Mat getDepth();
-    Mat getDepth8(); //scaled to fit 8 bit
-    Mat getDiscreteDepth();
+    Mat getDisp(bool colored=false); //if colored is set to true, then disp is colored for visualization
+    Mat getDepth(bool depth8=false); //if depth8 is set to true, then depth is scaled to fit 8 bit for visualizaton
     Mat getPointCloud();
-    Mat getDiscreteDepth8();
-    Mat getSegmentationMask();
 
+    Size getDepthSize();
+    Size getColorSize();
     uint8_t getRate();
 
     //measuring. distances are in millimetres, except functions ends with M (metres). directions in angles
@@ -144,26 +156,23 @@ public:
     uint16_t getMinDistance(); //minimun possible distance camera able to measure
     uint16_t getMaxDistance(); //maximum possible distance
 
-    uint16_t getNearestDistance(Rect roi=Rect()); // finds nearest distance in the region, if roi is empty - in a whole image
-    ScenePoint getNearestPoint(Rect roi=Rect()); // the same, but point
-    Obstacle getNearestObstacle(Rect roi=Rect());
-
-    ScenePoint getFarestPoint(uint16_t width=100, Rect roi=Rect()); //finds farest point with given x-zone width in the region, if roi is empty - in a whole image
+    //scene information
+    SceneInfo getSceneInfo(bool nearest_obstacle=true, bool nearest_point=true); //get nearest distance, nearest point(if nearest_point is set to true) and nearest obstacle(if nearest_obstacle is set to true)
+    ScenePoint getFarestPoint(uint16_t width=100); //finds farest point with given x-zone width
+    Mat getSceneGrid(vector<float> cols, vector<float> rows, int dist_th=3000, float occ_th=0.1, float pts_th=0.01); //get grid with given cols and rows
 
     //detection
     std::vector<Human> getHumans();
-    bool getNearestHumanBiometrics(Human &human);
+    bool getNearestHumanBiometrics(Human &human); //estimates age and gender of nearest human
 
-    //ar
-    bool initAR(float marker_size=0.04);
-    void deinitAR();
-    vector<Marker> getMarkers(uint8_t camera_num=0);
+    //aruco functions
+    vector<Marker> getMarkers(uint8_t camera_num=0, float marker_size=0.04);
     CameraParameters getARCameraParametres(uint8_t camera_num);
 
     //misc
     Scalar dist2rgb(uint16_t dist);
     uint8_t dist2disp(uint16_t dist);
-
+    uint16_t disp2dist(uint8_t disp);
 };
 
 #endif // ORSENS_H_INCLUDED

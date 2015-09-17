@@ -18,8 +18,9 @@ int main()
     {
         orsens.grabSensorData();
 
-        Mat disp = orsens.getDispColored();
-        ScenePoint pt = orsens.getNearestPoint();
+        orsens.removeFloor();
+        Mat disp = orsens.getDisp(true);
+        ScenePoint pt = orsens.getSceneInfo(false).nearest_point;
 
         printf("%d %d: %4.2f %4.2f %4.2f\n", pt.pt_image.x, pt.pt_image.y, pt.pt_world.x, pt.pt_world.y, pt.pt_world.z);
 

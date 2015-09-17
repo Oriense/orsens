@@ -1,9 +1,14 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(orsens)
 
-option(WITH_BIOMETRICS "Build biometrics lib and samples" OFF)
+option(WITH_BIOMETRICS "Build biometrics lib and samples" ON)
 option(WITH_AR "Build AR lib and samples" ON)
-option(WITH_OPENGL "Build OpenGL based samples. Turn on just if you have OpenCV with OpenGL support" OFF)
+option(WITH_OPENGL "Build OpenGL based samples. Turn on just if you have OpenCV with OpenGL support" ON)
+option(WITH_OGRE "Build OGRE-based samples" ON)
+
+if(WITH_OGRE)
+SET(WITH_AR ON)
+endif()
 
 ## pkg-config libraries
 find_package(PkgConfig REQUIRED)
@@ -27,6 +32,12 @@ if (QT5_FOUND)
 else()
    message(STATUS "Could not locate Qt5, biometrics functionlaity is off.")
    set(WITH_BIOMETRICS OFF)
+endif()
+
+if(WITH_OGRE)
+SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_INSTALL_PREFIX}/lib/cmake/ /usr/lib/cmake /usr/local/lib/cmake /usr/share/OGRE/cmake/modules)
+find_package(OGRE REQUIRED)
+find_package(OIS REQUIRED)
 endif()
 
 pkg_check_modules(avutil libavutil REQUIRED)
@@ -67,8 +78,8 @@ elseif (ARM)
   set(LIB_DIRECTORY lib/arm)
 elseif(X86)
   message("Architecture x86")
-  set(BIN_DIRECTORY bin)
-  set(LIB_DIRECTORY lib)
+  set(BIN_DIRECTORY bin/x86)
+  set(LIB_DIRECTORY lib/x86)
 endif()
 
 
@@ -78,6 +89,9 @@ set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} ${LIB_DIRECTORY})
 set(LIBRARIES_LIST ${avutil_LIBRARIES} ${avcodec_LIBRARIES} ${swscale_LIBRARIES} ${OpenCV_LIBS}) 
 
 include_directories(include
+  if(WITH_OGRE)
+    ${OGRE_INCLUDE_DIRS}
+  endif()
 )
 
 find_library(ORSENS
@@ -172,5 +186,18 @@ target_link_libraries(orsens_sample_pointcloud
   ${LIBRARIES_LIST}
   ${OPENGL_LIBRARIES}
   ${GLUT_LIBRARY}
+)
+endif()
+
+if(WITH_OGRE)
+add_executable(orsens_sample_ogre samples/ar_ogre_sample.cpp)
+target_link_libraries(orsens_sample_ogre
+  "${ORSENS}"
+  "${ORSENS_AR}"
+  "${ARUCO}"
+  ${OGRE_LIBRARY}
+  ${OIS_LIBRARY}
+  ${LIBRARIES_LIST} 
+  -lboost_system
 )
 endif()

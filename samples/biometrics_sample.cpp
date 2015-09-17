@@ -18,8 +18,6 @@ int main()
     bool detect_gender = true;
     bool detect_age = true;
 
-    orsens.initBiometrics(detect_gender, detect_age);
-
     Scalar draw_color = Scalar(0, 255, 0);
 
     Human human;
@@ -60,7 +58,6 @@ int main()
             break;
     }
 
-    orsens.deinitBiometrics();
     orsens.stop();
 
     return 0;

@@ -34,9 +34,11 @@ int initOgreAR(aruco::CameraParameters camParams, unsigned char* buffer, std::st
 	/// INIT OGRE FUNCTIONS
 #ifdef _WIN32
   	root = new Ogre::Root(resourcePath + "plugins_win.cfg", resourcePath + "ogre_win.cfg");
+#elif __x86_64__ || __ppc64__
+	root = new Ogre::Root(resourcePath + "plugins_x64.cfg", resourcePath + "ogre.cfg");
 #else
 	root = new Ogre::Root(resourcePath + "plugins.cfg", resourcePath + "ogre.cfg");
-#endif	
+#endif
   	if (!root->showConfigDialog()) return -1;
 	Ogre::SceneManager* smgr = root->createSceneManager(Ogre::ST_GENERIC);
 
@@ -189,8 +191,6 @@ int main( int argc, char **argv )
         return -1;
     }
 
-    orsens.initAR(marker_size);
-
     orsens.grabSensorData();
     Mat left = orsens.getLeft();
     undistort(left,leftUnd,orsens.getARCameraParametres(0).CameraMatrix,orsens.getARCameraParametres(0).Distorsion);
@@ -201,13 +201,13 @@ int main( int argc, char **argv )
     CameraParamsUnd.Distorsion=cv::Mat::zeros(4,1,CV_32F);
 
     /// INIT OGRE
-    initOgreAR(CameraParamsUnd, leftUnd.ptr<uchar>(0), "../data/ogre/");
+    initOgreAR(CameraParamsUnd, leftUnd.ptr<uchar>(0), "../../data/ogre/");
 
     while (true)
     {
         orsens.grabSensorData();
 
-        vector<Marker> left_markers = orsens.getMarkers(0);
+        vector<Marker> left_markers = orsens.getMarkers(0, marker_size);
 
         left = orsens.getLeft();
         undistort(left,leftUnd,orsens.getARCameraParametres(0).CameraMatrix,orsens.getARCameraParametres(0).Distorsion);
@@ -307,8 +307,6 @@ int main( int argc, char **argv )
 
 
     }
-
-    orsens.deinitAR();
 
     orsens.stop();
 

@@ -131,7 +131,7 @@ int main( int argc, char **argv )
     }
 
     namedWindow(cloud_window_name,CV_WINDOW_OPENGL|CV_WINDOW_NORMAL);
-    resizeWindow(cloud_window_name, 1024, 1024);
+    //resizeWindow(cloud_window_name, 1024, 1024);
     setOpenGlDrawCallback(cloud_window_name,on_opengl,0);
 
     glClearColor(0,0,0,0);
@@ -157,7 +157,7 @@ int main( int argc, char **argv )
         color = orsens.getLeft();
 
         imshow("left", color);
-        imshow("depth", orsens.getDepth8());
+        imshow("depth", orsens.getDepth(true));
 
         updateWindow(cloud_window_name);
 
@@ -180,12 +180,12 @@ int main( int argc, char **argv )
         case 83:
 		case 2555904:
 			angx-=angstep;
-            
+
             break;
 
         case 84:
 		case 2621440:
-			angy+=angstep;           
+			angy+=angstep;
             break;
 
         case 's':

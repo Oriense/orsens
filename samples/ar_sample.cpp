@@ -45,13 +45,11 @@ int main( int argc, char **argv )
         return -1;
     }
 
-    orsens.initAR(marker_size);
-
     while (true)
     {
         orsens.grabSensorData();
 
-        vector<Marker> left_markers = orsens.getMarkers(0);
+        vector<Marker> left_markers = orsens.getMarkers(0, marker_size);
 
         Mat left = orsens.getLeft();
 
@@ -78,7 +76,7 @@ int main( int argc, char **argv )
         if (mode==1)
         {
             cout<<endl << "right ";
-            vector<Marker> right_markers = orsens.getMarkers(1);
+            vector<Marker> right_markers = orsens.getMarkers(1, marker_size);
 
             Mat right = orsens.getRight();
 
@@ -109,8 +107,6 @@ int main( int argc, char **argv )
 
 
     }
-
-    orsens.deinitAR();
 
     orsens.stop();
 
