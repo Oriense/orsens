@@ -23,7 +23,7 @@ install: # Use this to install any prerequisites or dependencies necessary to ru
   - sudo apt-get update -qq
   - sudo apt-get install -qq libopencv-dev
   - sudo apt-get install -qq qt5-default libqt5svg5-dev
-  - sudo apt-get install -qq libogre-1.8-dev 
+  - sudo apt-get install -qq libogre-dev 
   - sudo apt-get install -qq libois-dev 
 
 
