@@ -47,7 +47,7 @@
     <TargetName>orsens_sample_$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>..\..\bin</OutDir>
+    <OutDir>..\..\bin\win</OutDir>
     <TargetName>orsens_sample_$(ProjectName)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
