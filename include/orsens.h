@@ -255,8 +255,9 @@ public:
     //processing
     /**removes speckles
     * @param maxSpeckleSize The maximum speckle size to consider it a speckle
+    * @param newVal The disparity value used to paint-off the speckles
     */
-    bool filterDisp(uint16_t maxSpeckleSize=1000);
+    bool filterDisp(uint16_t maxSpeckleSize=1000, uint8_t newVal=0);
 
     /**removes floor points
     */
