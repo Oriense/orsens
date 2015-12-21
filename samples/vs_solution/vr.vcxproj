@@ -47,7 +47,7 @@
     <TargetName>orsens_sample_$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>..\..\bin</OutDir>
+    <OutDir>..\..\bin\win</OutDir>
     <TargetName>orsens_sample_$(ProjectName)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -75,7 +75,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>..\..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>liborsens.lib;eSPDI.lib;opencv_core2410.lib;opencv_features2d2410.lib;opencv_highgui2410.lib;opencv_imgproc2410.lib;opencv_objdetect2410.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>liborsens.lib;eSPDI.lib;opencv_core2410.lib;opencv_calib3d2410.lib;opencv_features2d2410.lib;opencv_highgui2410.lib;opencv_imgproc2410.lib;opencv_objdetect2410.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
