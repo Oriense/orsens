@@ -266,8 +266,9 @@ public:
     //getting data
 
    /** returns rgb image from left camera
+   * @param gray if set returns gray image
    */
-    Mat getLeft();
+    Mat getLeft(bool gray=false);
    /** returns rgb image from right camera
    */
     Mat getRight();

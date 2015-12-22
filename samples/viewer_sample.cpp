@@ -23,6 +23,7 @@ static void printCommandLineParams()
     cout << "-cw       Color image width" << endl ;
     cout << "-dr       Depth stream rate" << endl ;
     cout << "-cr       Color stream rate" << endl ;
+    cout << "usage:    c - colorize depth image, f - filter depth image, g - get gray image from left cam" << endl ;
 }
 
 
@@ -117,6 +118,8 @@ int main( int argc, char **argv )
     }
 
     bool colorize_depth = true;
+    bool gray = false;
+    bool filterdisp = false;
 
     if (!orsens.start((Orsens::CaptureMode)mode, data_path, color_width, depth_width, color_rate, depth_rate, compress))
     {
@@ -132,6 +135,8 @@ int main( int argc, char **argv )
         switch (mode)
         {
         case Orsens::CAPTURE_DEPTH_ONLY:
+            if(filterdisp)
+                orsens.filterDisp();
             if (colorize_depth)
                 imshow(depth_window_name, orsens.getDisp(true));
             else
@@ -139,21 +144,32 @@ int main( int argc, char **argv )
             break;
 
         case Orsens::CAPTURE_LEFT_ONLY:
-            imshow(left_window_name, orsens.getLeft());
+            if(gray)
+                imshow(left_window_name, orsens.getLeft(true));
+            else
+                imshow(left_window_name, orsens.getLeft());
             break;
 
         case Orsens::CAPTURE_DEPTH_LEFT:
+            if(filterdisp)
+                orsens.filterDisp();
 
             if (colorize_depth)
                 imshow(depth_window_name, orsens.getDisp(true));
             else
                 imshow(depth_window_name, orsens.getDisp());
 
-            imshow(left_window_name, orsens.getLeft());
+            if(gray)
+                imshow(left_window_name, orsens.getLeft(true));
+            else
+                imshow(left_window_name, orsens.getLeft());
             break;
 
         case Orsens::CAPTURE_LEFT_RIGHT:
-            imshow(left_window_name, orsens.getLeft());
+            if(gray)
+                imshow(left_window_name, orsens.getLeft(true));
+            else
+                imshow(left_window_name, orsens.getLeft());
             imshow(right_window_name, orsens.getRight());
             break;
         }
@@ -165,7 +181,16 @@ int main( int argc, char **argv )
         case 'c':
             colorize_depth = !colorize_depth;
             break;
+
+        case 'g':
+            gray = !gray;
+            break;
+
+        case 'f':
+            filterdisp = !filterdisp;
+            break;
         }
+
 
         if (c==27)
             break;
