@@ -41,8 +41,7 @@ Optional:
 Camera itself provides depth and rgb stream via USB, and SDK contains set of ready-to-use computer vision functions. 
 
 Currenlty implemented:
-- Image and depthmap processing
-- Measuring 
+- [Image and depthmap processing, measuring](https://github.com/Oriense/orsens/blob/master/samples/viewer_sample.cpp)
 - [Obstacle detection](https://github.com/Oriense/orsens/blob/master/samples/obstacle_avoidance_sample.cpp)
 - [Scene segmentation](https://github.com/Oriense/orsens/blob/master/samples/segmentation_sample.cpp)
 - [Face detection](https://github.com/Oriense/orsens/blob/master/samples/detection_sample.cpp) and [recognition](https://github.com/Oriense/orsens/blob/master/samples/biometrics_sample.cpp)
