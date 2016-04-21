@@ -1,5 +1,7 @@
 # SDK for OrSens 3d-camera
 ROS package is [here](https://github.com/Oriense/orsens_ros).
+
+[API documentation](http://docs.ros.org/indigo/api/orsens/html/c++/orsens_8h.html) (Doxygen-generated)
 ## Overview
 [bin](https://github.com/Oriense/orsens/tree/master/bin) contains prebuilt examples of the functionality.
 
@@ -25,8 +27,8 @@ Currently tested on:
 * 1GB RAM
 
 Currently tested on:
-* Intel Core i5 laptops
-* Odroid U3 single-board computer (quad core ARM processor, 1GB RAM)
+* Intel Atom and Core i5 laptops
+* Orange PI and Odroid U3 single-board computers (quad core ARM processor, 1GB RAM)
 
 #####Dependencies. 
 For Windows all dependencies are provided.
@@ -41,16 +43,15 @@ Optional:
 Camera itself provides depth and rgb stream via USB, and SDK contains set of ready-to-use computer vision functions. 
 
 Currenlty implemented:
-- Image and depthmap processing
-- Measuring 
+- [Image and depthmap processing, measuring](https://github.com/Oriense/orsens/blob/master/samples/viewer_sample.cpp)
 - [Obstacle detection](https://github.com/Oriense/orsens/blob/master/samples/obstacle_avoidance_sample.cpp)
 - [Scene segmentation](https://github.com/Oriense/orsens/blob/master/samples/segmentation_sample.cpp)
 - [Face detection](https://github.com/Oriense/orsens/blob/master/samples/detection_sample.cpp) and [recognition](https://github.com/Oriense/orsens/blob/master/samples/biometrics_sample.cpp)
+- [AR](https://github.com/Oriense/orsens/blob/master/samples/ar_sample.cpp), [VR](https://github.com/Oriense/orsens/blob/master/samples/vr_sample.cpp)
 
 Coming soon:
-- Integration with SLAM implementations
+- [Integration with SLAM implementations](https://github.com/Oriense/orsens_ros)
 - Tracking
-- AR, VR
 - and much more
 
 ## Troubleshooting 
