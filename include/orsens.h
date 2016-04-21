@@ -309,6 +309,10 @@ public:
     /** returns direction to image rectangle */
     float directionToImageRect(Rect rect);
 
+
+    int32_t maxWorldX(uint16_t x);
+    int32_t maxWorldY(uint16_t y);
+
     /** returns minimun possible distance camera able to measure
     */
     uint16_t getMinDistance();
