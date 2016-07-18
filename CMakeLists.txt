@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(orsens)
 
-option(WITH_BIOMETRICS "Build biometrics lib and samples" ON)
-option(WITH_AR "Build AR lib and samples" ON)
-option(WITH_OPENGL "Build OpenGL based samples. Turn on just if you have OpenCV with OpenGL support" ON)
-option(WITH_OGRE "Build OGRE-based samples" ON)
+option(WITH_BIOMETRICS "Build biometrics lib and samples" OFF)
+option(WITH_AR "Build AR lib and samples" OFF)
+option(WITH_OPENGL "Build OpenGL based samples. Turn on just if you have OpenCV with OpenGL support" OFF)
+option(WITH_OGRE "Build OGRE-based samples" OFF)
 
 if(WITH_OGRE)
 SET(WITH_AR ON)
